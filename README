@@ -2,3 +2,5 @@ Instructions
 (1) Install Elastic Search
 (2) Install Docker
 	run "Docker run -it utkarshp/kenlm"
+(3) Get norvig.com/big.txt
+(4) Get http://boston.lti.cs.cmu.edu/Data/web08-bst/AOLQs.txt 
