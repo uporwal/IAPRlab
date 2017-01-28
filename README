@@ -5,7 +5,7 @@ In this lab we will build autocomplete feature by applying what we have learned 
 
 Instructions
 (1) Install Elastic Search
-(2) Install Docke
+(2) Install Docker
 	run "Docker run -it utkarshp/kenlm"
 	KenLM is already installed in this image
 (3) Download norvig.com/big.txt
