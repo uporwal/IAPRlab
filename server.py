@@ -4,28 +4,40 @@ import string
 import json
 import requests
 
+
+
 app = Flask(__name__)
+
 invalidChars = set(string.punctuation)
 
-def searchPrefixES(prefix):
+def searchPrefixEStry(prefix):
 
-    #1. Construct json query
-    #2. POST query to the server
-    #3. Process the response
-    #4. Return a list of suggestions
+    query = json.dumps({"countries": {"prefix": prefix, "completion": {"field": "name_suggest"}}})
+    r = requests.post('http://localhost:9200/countries/_suggest?pretty', query)
+    dump = r.json()
+    data = dump['countries'][0]
+    items = []
+    for d in data['options']:  # First Example
+        items.append(d['_source']['name_suggest']['input'])
+    return items
+
 
 @app.route('/')
 def home():
     html = render_template('home.html', name="IAPR AutoComplete Demo")
     return html
 
+
 @app.route('/searchPrefix')
 def searchPrefix():
     query = request.args.get('query')
     prefix = query.split(" ")[-1]
-    top10 = searchPrefixES(prefix)
+    print(query)
+    print(prefix)
+    #top10 = searchPrefixES(query, prefix)
+    top10 = searchPrefixEStry(prefix)
     return jsonify({"prediction": top10})
+
 
 if __name__ == '__main__':
     app.run()
-

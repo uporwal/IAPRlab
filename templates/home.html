@@ -35,11 +35,11 @@
         }
 
         body {
-            max-width: 1200px; margin: 0 auto 
+            max-width: 1200px; margin: 0 auto
         }
 
         div.left {
-            width: 25%; 
+            width: 25%;
             padding: 0 0 0 5%;
             float: left
         }
@@ -51,7 +51,7 @@
         }
 
         div.right {
-            width: 25%; 
+            width: 25%;
             padding: 0 5% 0 0;
             float: left
         }
@@ -89,36 +89,7 @@
                             var token = word[0]
                             autocomplete.append("<div>" + word + "</div> <br />");
                         });
-
-                        var newautocomplete = $("#keyboard");
-                        newautocomplete.empty();
-                        var top3 = $(words).slice(0, 3).each(function(index, word) {
-                            var token = word[0] 
-                            if (token == '<END_TOKEN>')
-                                return 'END_OF_QUERY'
-                            else
-                                return token
-                        });
-
-                        for (var i = 0; i < top3.length; i++) {
-                            if (i == 0){
-                                if (top3.length < 2) {
-                                    newautocomplete.append("<div class=\"pill\">" + top3[i][0] + "</div>");
-                                }
-                                else {
-                                    newautocomplete.append("<div class=\"pill\">" + top3[i+1][0] + "</div>");
-                                }
-                            }
-                            else if (i == 1){
-                                newautocomplete.append("<div class=\"pill\">" + top3[i-1][0] + "</div>");   
-                            }
-                            else {
-                                newautocomplete.append("<div class=\"pill\">" + top3[i][0] + "</div>");     
-                            }
-                        }
-                        newautocomplete.append("<img style=\"width: 87%;height: 150px;vertical-align: bottom;\" src=\"https://ebay.box.com/shared/static/1c89cd8de5yckumcu5pap15ypzkz87yk.png\">");
                     });
-                    previous = searchValue;
 
                 previous = searchValue;
             }
