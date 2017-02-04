@@ -17,7 +17,7 @@ in elastic search for building this feature. We will also use KenLM as the langu
 
 Goal of this exercise is to index some queries and give them some score. Indexed queries will be retrieved for auto-correct based on this score. In this lab we want to score these queries with a language model. To do that, run the docker image in an interactive mode as shown in step (1) of instructions. In /home/data, I have downloaded some AOL queries in AOLQ.txt. We would score these queries but we first need to train a language model. For that, in /home/data there is big.txt that we will use to train LM. You can train the LM using the following command.
 
-bin/lmplz -o 5 < ../data/big.txt > ../data/big.arpa
+`bin/lmplz -o 5 < ../data/big.txt > ../data/big.arpa`
 
 Once, LM is trained we would convert the arpa file into a binary as it makes querying the LM faster. This can be done by following command.
 
