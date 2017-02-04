@@ -4,7 +4,7 @@ feature which offers suggestions for query completion as user types his/her quer
 In this lab we will build autocomplete feature by applying what we have learned today about language models. We are going to use completion suggester
 in elastic search for building this feature. We will also use KenLM as the language model library for this project. 
 
-Instructions
+<b>Instructions<\b>
 (1) Install Elastic Search
 (2) Install Docker
   run "docker run -it utkarshp/kenlm"
