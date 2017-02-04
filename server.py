@@ -10,7 +10,7 @@ app = Flask(__name__)
 
 invalidChars = set(string.punctuation)
 
-def searchPrefixEStry(prefix):
+def searchPrefixES(prefix):
 
     query = json.dumps({"countries": {"prefix": prefix, "completion": {"field": "name_suggest"}}})
     r = requests.post('http://localhost:9200/countries/_suggest?pretty', query)
@@ -34,8 +34,7 @@ def searchPrefix():
     prefix = query.split(" ")[-1]
     print(query)
     print(prefix)
-    #top10 = searchPrefixES(query, prefix)
-    top10 = searchPrefixEStry(prefix)
+    top10 = searchPrefixES(prefix)
     return jsonify({"prediction": top10})
 
 
