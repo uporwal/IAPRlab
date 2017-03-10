@@ -17,15 +17,21 @@ in elastic search for building this feature. We will also use KenLM as the langu
 
 Goal of this exercise is to index some queries and give them some score. Indexed queries will be retrieved for auto-correct based on this score. In this lab we want to score these queries with a language model. To do that, run the docker image in an interactive mode as shown in step (1) of instructions. In /home/data, I have downloaded some AOL queries in AOLQ.txt. We would score these queries but we first need to train a language model. For that, in /home/data there is big.txt that we will use to train LM. You can train the LM using the following command.
 
-```bin/lmplz -o 5 < ../data/big.txt > ../data/big.arpa```
+```sh
+bin/lmplz -o 5 < ../data/big.txt > ../data/big.arpa
+```
 
 Once, LM is trained we would convert the arpa file into a binary as it makes querying the LM faster. This can be done by following command.
 
-```bin/build_binary text.arpa text.binary```
+```sh
+bin/build_binary text.arpa text.binary
+```
 
 Once, binary is obtained, we are ready to query this LM. This can be done using the following command. Please using the options to query accordingly as we need scores at query (sentence level).
 
-```bin/query -s 1 ../data/big.binary < ../data/AOLqueries.txt > result.txt```
+```sh
+bin/query -s 1 ../data/big.binary < ../data/AOLqueries.txt > result.txt
+```
 
 However, as we saw in the lab we dont necessarily need a LM to score queries. We can score these queries in any way we see fir. We can even just use the query counts (third column in the AOL data) as scores.
 
@@ -33,7 +39,8 @@ However, as we saw in the lab we dont necessarily need a LM to score queries. We
 
 Once queries and their respective scores are obtained. We can index them. Indexing has two steps. First is creating a mapping after stating elasticsearch engine. Mapping is a way of letting elasticsearch know about the format of our document. This can be done using sense plugin of chrome. We can do the following in the sense.
 
-```PUT /queries
+```sh
+PUT /queries
 {
   "mappings": {
     "query" : {
@@ -45,22 +52,26 @@ Once queries and their respective scores are obtained. We can index them. Indexi
       } 
     }
   }
-}```
+}
+```
 
 if successful, you'll see the following in the output panel
 
-```{
+```sh
+{
    "acknowledged": true,
    "shards_acknowledged": true
-}```
+}
+```
 
 This is elasticsearch's way of acknowledging the meta data information about the structure of our documents. 
 
-Here, queries is the name of our index. query is type and we have two fields in our document namely "name" and "name_suggest". We will use the _suggest end point of elasticsearch and it will use the name_suggest field for offering suggestions. More details about this can be found [here](https://www.elastic.co/blog/you-complete-me)
+Here, queries is the name of our index. query is type and we have two fields in our document namely "name" and "name_suggest". We will use the _suggest end point of elasticsearch and it will use the name_suggest field for offering suggestions. More details about this can be found [here.](https://www.elastic.co/blog/you-complete-me)
 
 Next we can index few queries in sense to get a better understanding. Do the following  
 
-```PUT queries/query/1
+```sh
+PUT queries/query/1
 {
   "name" :         "hello kitty",
   "name_suggest" : { 
@@ -68,7 +79,8 @@ Next we can index few queries in sense to get a better understanding. Do the fol
     "weight":      50
   }
 }
-
+```
+```sh
 PUT queries/query/2
 {
   "name" :         "hello kitty bag",
@@ -76,11 +88,13 @@ PUT queries/query/2
     "input" :  "hello kitty bag",
     "weight":      60
   }
-}```
+}
+```
 
 If successful, you'd see something like this in the output panel of sense
 
-```{
+```sh
+{
    "_index": "queries",
    "_type": "query",
    "_id": "2",
@@ -92,10 +106,12 @@ If successful, you'd see something like this in the output panel of sense
       "failed": 0
    },
    "created": true
-}```
+}
+```
 
 Now we can use the _suggest end point to see some results; do the following
-```POST /queries/_suggest
+```sh
+POST /queries/_suggest
 {
   "countries" : {
     "prefix" : "h",
@@ -103,11 +119,13 @@ Now we can use the _suggest end point to see some results; do the following
       "field" : "name_suggest"
     }
   }
-}```
+}
+```
 
 and you'd see something like the following
 
-```{
+```sh
+{
    "_shards": {
       "total": 5,
       "successful": 5,
@@ -164,12 +182,15 @@ and you'd see something like the following
          ]
       }
    ]
-}```
+}
+```
 
 Now, we need to index queries in bulk, for that we have to first create a json file with all the queries and weights as json objects. Please refer to data/aol.json to see what this will look like.
 Once, this file is in place, run the following
 
-```curl -XPOST 'localhost:9200/bank/queries/_bulk?pretty&refresh' --data-binary "@aol.json"```
+```sh
+curl -XPOST 'localhost:9200/bank/queries/_bulk?pretty&refresh' --data-binary "@aol.json"
+```
 
 Now, that all the queries are indexed, all we need to do is to post request to elasticsearch and process the json response. Code for doing this is provided in server.py.
 
