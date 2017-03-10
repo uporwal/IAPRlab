@@ -1,3 +1,4 @@
+#Autocomplete
 If you have used Google, eBay, Bing or any major commercial search engine, then its likely that you have used autocomplete functionality. Autocomplete is a powerful
 feature which offers suggestions for query completion as user types his/her query. It enhances user experience and is especially useful while using mobile devices as it is not easy to type on mobile.
 
