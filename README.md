@@ -11,8 +11,7 @@ in elastic search for building this feature. We will also use KenLM as the langu
   KenLM is already installed in this image
 * Download norvig.com/big.txt. This is also present in docker image.
   We will train our language model on this. This is also present in docker image.
-* Download http://boston.lti.cs.cmu.edu/Data/web08-bst/AOLQs.txt
-  We will use these queries to index for suggestions
+* Download http://boston.lti.cs.cmu.edu/Data/web08-bst/AOLQs.txt. We will use these queries to index for suggestions
 * Add plugin "Sense" to Chrome
 
 Goal of this exercise is to index some queries and give them some score. Indexed queries will be retrieved for auto-correct based on this score. In this lab we want to score these queries with a language model. To do that, run the docker image in an interactive mode as shown in step (1) of instructions. In /home/data, I have downloaded some AOL queries in AOLQ.txt. We would score these queries but we first need to train a language model. For that, in /home/data there is big.txt that we will use to train LM. You can train the LM using the following command.
